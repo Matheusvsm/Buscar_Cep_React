@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {FiSearch} from 'react-icons/fi';
+import { SlMap } from "react-icons/sl";
 import './styles.css';
 import api from './services/api';
 
@@ -22,7 +23,20 @@ function App() {
     }
   }
 
+  function MapSearch() {
+    const cepValue = cep.cep;
+    
+    if (cepValue.length > 0) {
+      const googleMapsURL = `https://www.google.com/maps/dir/?api=1&destination=${cepValue}`;
+      window.open(googleMapsURL, '_blank');
+    } else {
+      alert("Erro: CEP não foi preenchido.");
+    }
+  }
+  
+
   return (
+  
     <div className="container">
       <h1 className="title">Buscar CEP </h1>
       <div className="containerInput">
@@ -43,8 +57,11 @@ function App() {
         <span>{cep.complemento}</span>
         <span>{cep.bairro}</span>
         <span>{cep.localidade} - {cep.uf}</span> 
-      </main>
-    )}
+        <button className="buttonMap" onClick={MapSearch}>
+            <SlMap size={12} color='#FFF'/>
+        </button>
+      </main>     
+    )}   
     </div>
   );
 }
